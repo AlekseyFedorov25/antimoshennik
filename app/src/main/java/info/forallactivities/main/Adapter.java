@@ -12,12 +12,17 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,10 +40,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
         TextView personName;
         TextView personEmail;
         TextView personCity;
-
-        TextView tel1;
-        TextView tel2;
-        TextView tel3;
+        LinearLayout personTel_lay;
 
         PersonViewHolder(View itemView) {
             super(itemView);
@@ -47,9 +49,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
             personName = (TextView) itemView.findViewById(R.id.fname);
             personEmail = (TextView) itemView.findViewById(R.id.email);
             personCity = (TextView) itemView.findViewById(R.id.city);
-            tel1 = (TextView) itemView.findViewById(R.id.tel1);
-            tel2 = (TextView) itemView.findViewById(R.id.tel2);
-            tel3 = (TextView) itemView.findViewById(R.id.tel3);
+            personTel_lay = (LinearLayout) itemView.findViewById(R.id.tel_layout);
             itemView.setOnClickListener(this);
 
         }
@@ -71,6 +71,32 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
         this.persons = persons;
     }
 
+    public void stripUnderlines(TextView textView) {
+        Spannable s = new SpannableString(textView.getText());
+        URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
+        for (URLSpan span : spans) {
+            int start = s.getSpanStart(span);
+            int end = s.getSpanEnd(span);
+            s.removeSpan(span);
+            span = new Adapter.URLSpanNoUnderline(span.getURL());
+            s.setSpan(span, start, end, 0);
+        }
+        textView.setText(s);
+    }
+
+    public class URLSpanNoUnderline extends URLSpan {
+        public URLSpanNoUnderline(String url) {
+            super(url);
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setUnderlineText(false);
+        }
+    }
+
+
     @Override
     public int getItemCount() {
         return persons.size();
@@ -85,25 +111,29 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
 
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+        Animation anim = AnimationUtils.loadAnimation(main.getAppContext(), R.anim.main_1);
+        Animation anim2 = AnimationUtils.loadAnimation(main.getAppContext(), R.anim.main_2);
+
         personViewHolder.personId.setText(persons.get(i).getA_idof());
         personViewHolder.personName.setText(persons.get(i).getA_f_name());
         personViewHolder.personCity.setText(persons.get(i).getA_city());
         personViewHolder.personEmail.setText(persons.get(i).getA_e_mail());
-        switch (persons.get(i).getS_of_atels()) {
-            case 1:
-                personViewHolder.tel1.setText(persons.get(i).getA_telenums()[0]);
-                break;
-
-            case 2:
-                personViewHolder.tel1.setText(persons.get(i).getA_telenums()[0]);
-                personViewHolder.tel2.setText(persons.get(i).getA_telenums()[1]);
-                break;
-
-            case 3:
-                personViewHolder.tel1.setText(persons.get(i).getA_telenums()[0]);
-                personViewHolder.tel2.setText(persons.get(i).getA_telenums()[1]);
-                personViewHolder.tel3.setText(persons.get(i).getA_telenums()[2]);
-                break;
+        TextView[] tels = new TextView[5];
+        for (int j = 0; j < persons.get(i).getS_of_atels(); j++) {
+            tels[j] = new TextView(new ContextThemeWrapper(main.getAppContext(), R.style.Links), null, 0);
+            tels[j].setText(persons.get(i).getA_telenums()[j]);
+            Linkify.addLinks(tels[j], Linkify.PHONE_NUMBERS);
+            stripUnderlines(tels[j]);
+            personViewHolder.personTel_lay.addView(tels[j]);
+            switch (j % 2) {
+                case 1:
+                    tels[j].startAnimation(anim);
+                    break;
+                case 0:
+                    tels[j
+                            ].startAnimation(anim2);
+                    break;
+            }
         }
     }
 

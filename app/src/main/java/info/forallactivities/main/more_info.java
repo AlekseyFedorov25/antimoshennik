@@ -94,7 +94,7 @@ public class more_info extends AppCompatActivity {
         }
     }
 
-    public static void addLinks(TextView textView, String linkThis, String toThis) {
+    public static void addLinks(TextView textView, String linkThis, String  toThis) {
         Pattern pattern = Pattern.compile(linkThis);
         String scheme = toThis;
         android.text.util.Linkify.addLinks(textView, pattern, scheme, new Linkify.MatchFilter() {
@@ -162,7 +162,7 @@ public class more_info extends AppCompatActivity {
             TextView city_m = findViewById(R.id.city_m);
             TextView email_m = findViewById(R.id.email_m);
             LinearLayout link_lay = findViewById(R.id.link_lay);
-            LinearLayout tel_lay = findViewById(R.id.tel_layout);
+            LinearLayout tel_lay = findViewById(R.id.tel_layout_m);
             TextView[] links = new TextView[5];
             TextView[] tels = new TextView[5];
 
