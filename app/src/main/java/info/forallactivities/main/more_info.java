@@ -15,6 +15,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +56,7 @@ public class more_info extends AppCompatActivity {
         moreInfoFromDB mifdb = new moreInfoFromDB();
         mifdb.execute(id);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -111,7 +113,6 @@ public class more_info extends AppCompatActivity {
 
     class moreInfoFromDB extends AsyncTask<String, Void, AdapterHelper> {
         AdapterHelper adh_r;
-
         @Override
         protected AdapterHelper doInBackground(String... strings) {
             try {
@@ -160,32 +161,41 @@ public class more_info extends AppCompatActivity {
             TextView fname_m = findViewById(R.id.fname_m);
             TextView city_m = findViewById(R.id.city_m);
             TextView email_m = findViewById(R.id.email_m);
-            TextView tel1_m = findViewById(R.id.tel1_m);
-            TextView tel2_m = findViewById(R.id.tel2_m);
-            TextView tel3_m = findViewById(R.id.tel3_m);
             LinearLayout link_lay = findViewById(R.id.link_lay);
+            LinearLayout tel_lay = findViewById(R.id.tel_layout);
             TextView[] links = new TextView[5];
+            TextView[] tels = new TextView[5];
 
             fname_m.setText(adh.getA_f_name());
             city_m.setText(adh.getA_city());
             email_m.setText(adh.getA_e_mail());
 
-            switch (adh.getS_of_atels()) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
+
+            for (int i = 0; i < adh.getS_of_atels(); i++) {
+                tels[i] = new TextView(new ContextThemeWrapper(more_info.this, R.style.Links), null, 0);
+                System.out.println(adh.getA_telenums()[i]);
+                tels[i].setText(adh.getA_telenums()[i]);
+                Linkify.addLinks(tels[i],  Linkify.PHONE_NUMBERS);
+                stripUnderlines(tels[i]);
+                tel_lay.addView(tels[i]);
+                switch (i % 2) {
+                    case 1:
+                        tels[i].startAnimation(anim);
+                        break;
+                    case 0:
+                        tels[i].startAnimation(anim2);
+                        break;
+                }
+
             }
+
             for (int i = 0; i < adh.getS_of_alinks(); i++) {
-                links[i] = new TextView(getApplicationContext());
+                links[i] = new TextView(new ContextThemeWrapper(more_info.this, R.style.Links), null, 0);
                 System.out.println(adh.getA_links()[i]);
                 Pattern pattern = Pattern.compile("[\\/]");
-                String toset = pattern.split(adh.getA_links()[i]).length > 1 ? pattern.split(adh.getA_links()[i])[0]+"..." : pattern.split(adh.getA_links()[i])[0];
-                links[i].setText(toset);
-                addLinks(links[i], toset, "http://"+adh.getA_links()[i]);
-                TextViewCompat.setTextAppearance(links[i], R.style.Links);
+                String linktoset = pattern.split(adh.getA_links()[i]).length > 1 ? pattern.split(adh.getA_links()[i])[0] + "..." : pattern.split(adh.getA_links()[i])[0];
+                links[i].setText(linktoset);
+                addLinks(links[i], linktoset, "http://" + adh.getA_links()[i]);
                 stripUnderlines(links[i]);
                 link_lay.addView(links[i]);
 

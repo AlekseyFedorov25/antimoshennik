@@ -14,100 +14,139 @@
         tools:showIn="@layout/activity_more_info">
 
         <TextView
-            android:id="@+id/fname_m"
-            android:layout_width="wrap_content"
+            android:id="@+id/pre-fname_m"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Ted Jakart"
+            android:text="Full Name"
             android:textColor="#777"
-            android:textSize="50sp"
+            android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/fname_m"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.3" />
+
+        <TextView
+            android:id="@+id/fname_m"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#777"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="@id/pre-fname_m"
+            app:layout_constraintLeft_toRightOf="@id/pre-fname_m"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <TextView
+            android:id="@+id/pre-city_m"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="City"
+            android:textColor="#777"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/city_m"
+            app:layout_constraintTop_toBottomOf="@id/pre-fname_m"
+            app:layout_constraintWidth_percent="0.2" />
 
         <TextView
             android:id="@+id/city_m"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Moscow"
+            android:gravity="center"
+            android:text=""
             android:textColor="#777"
-            android:textSize="50sp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="@id/pre-city_m"
+            app:layout_constraintLeft_toRightOf="@id/pre-city_m"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fname_m" />
+            app:layout_constraintTop_toTopOf="@id/pre-city_m"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <TextView
+            android:id="@+id/pre-email_m"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="E-mail"
+            android:textColor="#777"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/email_m"
+            app:layout_constraintTop_toBottomOf="@id/pre-city_m"
+            app:layout_constraintWidth_percent="0.3" />
 
         <TextView
             android:id="@+id/email_m"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="xxx.xx@xxx.com"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text=""
             android:textColor="#777"
-            android:textSize="20sp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/pre-email_m"
+            app:layout_constraintLeft_toRightOf="@id/pre-email_m"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/city_m" />
+            app:layout_constraintTop_toBottomOf="@id/city_m"
+            app:layout_constraintWidth_percent="0.7" />
 
         <TextView
-            android:id="@+id/tel1_m"
-            android:layout_width="wrap_content"
+            android:id="@+id/pre-tel_m"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autoLink="phone"
-            android:text="8XXXXXXXXXX"
+            android:layout_marginTop="20dp"
+            android:text="Telephone Numbers"
             android:textColor="#777"
-            android:textSize="30sp"
+            android:textSize="25sp"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tel-layout"
+            app:layout_constraintTop_toBottomOf="@id/pre-email_m"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <LinearLayout
+            android:id="@+id/tel-layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/pre-tel_m"
+            app:layout_constraintLeft_toRightOf="@id/pre-tel_m"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_m" />
+            app:layout_constraintTop_toTopOf="@id/pre-tel_m"
+            app:layout_constraintWidth_percent="0.6">
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tel2_m"
-            android:layout_width="wrap_content"
+            android:id="@+id/links_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autoLink="phone"
-            android:text="8XXXXXXXXXX"
-            android:textColor="#777"
+            android:layout_marginTop="20dp"
+            android:text="Links"
             android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tel1_m" />
+            app:layout_constraintRight_toLeftOf="@id/link_lay"
+            app:layout_constraintTop_toBottomOf="@id/pre-tel_m"
+            app:layout_constraintWidth_percent="0.3" />
 
-        <TextView
-            android:id="@+id/tel3_m"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/link_lay"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autoLink="phone"
-            android:text="8XXXXXXXXXX"
-            android:textColor="#777"
-            android:textSize="30sp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/links_text"
+            app:layout_constraintLeft_toRightOf="@id/links_text"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tel2_m" />
+            app:layout_constraintTop_toTopOf="@id/links_text"
+            app:layout_constraintWidth_percent="0.8">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Links"
-                android:id="@+id/links_text"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tel3_m"
-                app:layout_constraintRight_toLeftOf="@id/link_lay"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintWidth_percent="0.5"
-                android:textSize="40sp"
-                />
-
-            <LinearLayout
-                android:id="@+id/link_lay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintLeft_toRightOf="@id/links_text"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tel3_m"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintWidth_percent="0.5" >
-            </LinearLayout>
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

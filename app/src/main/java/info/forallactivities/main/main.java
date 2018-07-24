@@ -83,7 +83,6 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                 datatoreq[3] = et_tel.getText().toString();
                 readfromDB readfromdb = new readfromDB();
                 readfromdb.execute(datatoreq);
-
         }
     }
 

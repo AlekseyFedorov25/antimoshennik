@@ -8,6 +8,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.style.URLSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,30 +39,35 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
         TextView tel1;
         TextView tel2;
         TextView tel3;
+
         PersonViewHolder(View itemView) {
             super(itemView);
             rv = (RecyclerView) itemView.findViewById(R.id.grid_v);
-            personId = (TextView)itemView.findViewById(R.id.idof);
-            personName = (TextView)itemView.findViewById(R.id.fname);
-            personEmail= (TextView)itemView.findViewById(R.id.email);
-            personCity = (TextView)itemView.findViewById(R.id.city);
-            tel1 = (TextView)itemView.findViewById(R.id.tel1);
-            tel2 = (TextView)itemView.findViewById(R.id.tel2);
-            tel3 = (TextView)itemView.findViewById(R.id.tel3);
+            personId = (TextView) itemView.findViewById(R.id.idof);
+            personName = (TextView) itemView.findViewById(R.id.fname);
+            personEmail = (TextView) itemView.findViewById(R.id.email);
+            personCity = (TextView) itemView.findViewById(R.id.city);
+            tel1 = (TextView) itemView.findViewById(R.id.tel1);
+            tel2 = (TextView) itemView.findViewById(R.id.tel2);
+            tel3 = (TextView) itemView.findViewById(R.id.tel3);
             itemView.setOnClickListener(this);
 
         }
+
         @Override
         public void onClick(View view) {
             TextView id_tv = (TextView) view.findViewById(R.id.idof);
             Context context = main.getAppContext();
-            Intent i = new Intent(context,more_info.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            i.putExtra("id",id_tv.getText());
+            Intent i = new Intent(context.getApplicationContext(), more_info.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("id", id_tv.getText());
+            context.startActivity(i);
         }
     }
+
     List<AdapterHelper> persons;
-    Adapter(List<AdapterHelper> persons){
+
+    Adapter(List<AdapterHelper> persons) {
         this.persons = persons;
     }
 
@@ -74,25 +83,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
         return pvh;
     }
 
-    public static int getPixelValue(Context context, int dimenId) {
-        Resources resources = context.getResources();
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dimenId,
-                resources.getDisplayMetrics()
-        );
-    }
-
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
         personViewHolder.personId.setText(persons.get(i).getA_idof());
         personViewHolder.personName.setText(persons.get(i).getA_f_name());
         personViewHolder.personCity.setText(persons.get(i).getA_city());
         personViewHolder.personEmail.setText(persons.get(i).getA_e_mail());
-        more_info mif = new more_info();
-        switch (persons.get(i).getS_of_atels()){
+        switch (persons.get(i).getS_of_atels()) {
             case 1:
-
                 personViewHolder.tel1.setText(persons.get(i).getA_telenums()[0]);
                 break;
 
@@ -107,10 +105,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PersonViewHolder> {
                 personViewHolder.tel3.setText(persons.get(i).getA_telenums()[2]);
                 break;
         }
-
-        mif.stripUnderlines(personViewHolder.tel1);
-        mif.stripUnderlines(personViewHolder.tel2);
-        mif.stripUnderlines(personViewHolder.tel3);
     }
 
     @Override
